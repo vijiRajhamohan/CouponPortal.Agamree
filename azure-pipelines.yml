@@ -1,0 +1,203 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+      - refs/tags/*
+  paths:
+    exclude:
+      - '**/*.md'
+
+pr:
+  autoCancel: true
+  branches:
+    include:
+      - master
+  paths:
+    exclude:
+      - '**/*.md'
+
+resources:
+  repositories:
+    - repository: kiuwan
+      type: git
+      name: DevOps/Kiuwan
+      ref: refs/tags/v1.0.0
+    - repository: shared
+      type: git
+      name: DevOps/SharedBuildTemplates
+      ref: refs/tags/v0.1.0
+
+jobs:
+  - template: pipelines/kiuwan.yml@kiuwan
+    parameters:
+      configName: stargate
+      team: Portals
+  - job: Build
+    displayName: Build
+    variables:
+      - name: Name
+        value: Coupon Portal
+    steps:
+      - checkout: self
+        clean: false
+
+      - powershell: |
+          if ([Net.ServicePointManager]::SecurityProtocol -notlike '*Tls12*') { [Net.ServicePointManager]::SecurityProtocol += [Net.SecurityProtocolType]::Tls12; }
+          $url ="$(System.TeamFoundationCollectionUri)$(System.TeamProject)/_apis/git/repositories/$(Build.Repository.Name)";
+          $repo = Invoke-RestMethod -Uri $url -Headers @{
+              Authorization = "Bearer $(System.AccessToken)"
+          }
+          Write-Host "##vso[task.setvariable variable=Portal.Id;]$($repo.id)"
+        displayName: 'Get Portal.Id'
+
+      - task: gittools.gitversion.gitversion-task.GitVersion@5
+        displayName: GitVersion
+        inputs:
+          configFilePath: GitVersion.yml
+
+      - task: DotNetCoreInstaller@0
+        displayName: 'Use .NET Core sdk 2.2.401'
+        inputs:
+          version: 2.2.401
+
+      - task: NodeTool@0
+        displayName: 'Use Node 12.x'
+        inputs:
+          versionSpec: 12.x
+
+      - task: Npm@1
+        displayName: 'npm install'
+        inputs:
+          verbose: false
+
+      - task: Npm@1
+        displayName: 'npm version'
+        inputs:
+          command: custom
+          verbose: false
+          customCommand: 'version --no-git-tag-version $(GitVersion.SemVer)'
+
+      - powershell: .\build.ps1 --artifacts $(Build.ArtifactStagingDirectory)
+        displayName: 'Run Build'
+
+      - powershell: |
+          $Uri = 'https://portico-setup-qa-int.trialcard.com';
+          $PortalId = '$(Portal.Id)';
+          $Destination = '$(Build.ArtifactStagingDirectory)\portal.json';
+
+          if ([Net.ServicePointManager]::SecurityProtocol -notlike '*Tls12*') { [Net.ServicePointManager]::SecurityProtocol += [Net.SecurityProtocolType]::Tls12; }
+
+          $url = "$Uri/Setup/Export/$PortalId";
+
+          Write-Host "Downloading portal from '$url'";
+
+          Invoke-WebRequest `
+              -UseDefaultCredentials `
+              -Uri $url `
+              -Method Get `
+              -OutFile $Destination `
+              -UseBasicParsing `
+              -ErrorAction Stop;
+
+          $finalPath = Resolve-Path $Destination;
+          Write-Host "Saved file to '$finalPath'";
+        displayName: 'Download Portal'
+
+      - task: ArchiveFiles@2
+        displayName: 'Archive dist/'
+        inputs:
+          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/dist/'
+          includeRootFolder: false
+          archiveFile: '$(Build.ArtifactStagingDirectory)/$(Name).zip'
+
+      - task: PublishTestResults@2
+        displayName: 'Publish Test Results $(Build.ArtifactStagingDirectory)/tests/**/*.trx'
+        inputs:
+          testResultsFormat: VSTest
+          testRunTitle: Unit Test Results
+          testResultsFiles: '$(Build.ArtifactStagingDirectory)/tests/**/*.trx'
+
+      - task: PublishTestResults@2
+        displayName: 'Publish Test Results $(Build.ArtifactStagingDirectory)/tests/**/*.junit'
+        inputs:
+          testResultsFormat: JUnit
+          testRunTitle: Unit Test Results
+          testResultsFiles: '$(Build.ArtifactStagingDirectory)/tests/**/*.junit'
+
+      - task: PublishCodeCoverageResults@1
+        displayName: 'Publish code coverage'
+        inputs:
+          codeCoverageTool: Cobertura
+          summaryFileLocation: '$(Build.ArtifactStagingDirectory)/coverage/cobertura-coverage.xml'
+          reportDirectory: '$(Build.ArtifactStagingDirectory)/coverage/lcov-report'
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: dist'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/dist/'
+          ArtifactName: dist
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: scripts'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/scripts/'
+          ArtifactName: scripts
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: build'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: build
+  # - job: Testing
+  #   displayName: Integration Tests
+  #   variables:
+  #     - group: 'BrowserStack'
+  #   dependsOn:
+  #     - Build
+  #   workspace:
+  #     clean: outputs
+  #   steps:
+  #     - checkout: self
+  #       clean: false
+  #     - task: DotNetCoreInstaller@0
+  #       displayName: 'Use .NET Core sdk 2.2.401'
+  #       inputs:
+  #         version: 2.2.401
+  #     - task: NodeTool@0
+  #       displayName: 'Use Node 12.x'
+  #       inputs:
+  #         versionSpec: 12.x
+  #     - task: gittools.gitversion.gitversion-task.GitVersion@5
+  #       displayName: GitVersion
+  #     - task: Npm@1
+  #       displayName: 'npm install'
+  #       inputs:
+  #         verbose: false
+  #     - task: DownloadBuildArtifacts@0
+  #       displayName: Download Dist
+  #       inputs:
+  #         artifactName: dist
+  #         downloadType: single
+  #     - task: DownloadBuildArtifacts@0
+  #       displayName: Download Scripts
+  #       inputs:
+  #         artifactName: scripts
+  #         downloadType: single
+  #     - template: ./.build/testcafe.yml
+  #       parameters:
+  #         browsers:
+  #           - name: Chrome
+  #             value: 'browserstack:chrome'
+  #           # - name: iPhone XR
+  #           #   value: 'browserstack:iPhone XR'
+  #           # - name: Galaxy S10
+  #           #   value: 'browserstack:Galaxy S10'
+  #           # - name: iPad Pro 12.9 2018
+  #           #   value: 'browserstack:iPad Pro 12.9 2018'
+  #           # - name: Edge
+  #           #   value: 'browserstack:edge'
+  #           # - name: Internet Explorer # internet exploder?
+  #           #   value: 'browserstack:ie'
+  #         BrowserStackAccessKey: $(BrowserStack.AccessKey)
+  #         BrowserStackUsername: $(BrowserStack.Username)

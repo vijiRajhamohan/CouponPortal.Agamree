@@ -1,0 +1,11 @@
+{
+    "watch": ["server", "modules", "settings", "nuxt.config.ts"],
+    "execMap": {
+        "ts": "node --max-old-space-size=4096 -r ts-node/register -r trace -r clarify",
+        "js": "node --max-old-space-size=4096 -r trace -r clarify"
+    },
+    "ext": "ts,js,json",
+    "env": {
+        "NODE_ENV": "development"
+    }
+}

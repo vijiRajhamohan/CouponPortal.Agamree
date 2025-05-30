@@ -1,0 +1,38 @@
+{
+    "title": "Eligibility Questionnaire",
+    "subtitle": "",
+    "questions": [
+        {
+            "title": "Do you purchase your prescription medication with cash or through a federal or state prescription drug program, such as Medicaid, Medicare Part A, B, C and/or D, TRICARE, CHAMPUS, Puerto Rico Government Health Insurance Plan, Department of Defense, Veterans Administration, or any other state or federal healthcare program?",
+            "questionType": "multipleChoice",
+            "answers": [
+                {
+                    "title": "Yes",
+                    "value": true,
+                    "isCorrect": false
+                },
+                {
+                    "title": "No",
+                    "value": false,
+                    "isCorrect": true
+                }
+            ]
+        },
+        {
+            "title": "Do you currently live in the U.S. or U.S. territories?",
+            "questionType": "multipleChoice",
+            "answers": [
+                {
+                    "title": "Yes",
+                    "value": true,
+                    "isCorrect": true
+                },
+                {
+                    "title": "No",
+                    "value": false,
+                    "isCorrect": false
+                }
+            ]
+        }
+    ]
+}

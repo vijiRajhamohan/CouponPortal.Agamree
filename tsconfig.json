@@ -1,0 +1,42 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "lib": ["esnext", "esnext.asynciterable", "dom"],
+        "jsx": "preserve",
+        "esModuleInterop": true,
+        "allowJs": false,
+        "noEmit": true,
+        "strict": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "sourceMap": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "allowUnusedLabels": false,
+        "allowUnreachableCode": false,
+        "allowSyntheticDefaultImports": true,
+        "preserveConstEnums": true,
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+        "importHelpers": true,
+        "noUnusedParameters": false,
+        "noUnusedLocals": false,
+        "downlevelIteration": true,
+        "suppressExcessPropertyErrors": false,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "resolveJsonModule": true,
+        "baseUrl": ".",
+        "paths": {
+            "~/*": ["./*"],
+            "@/*": ["./*"]
+        },
+        "types": null
+    },
+    "typeAcquisition": {
+        "enable": false
+    },
+    "exclude": ["node_modules"]
+}

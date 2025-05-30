@@ -1,0 +1,23 @@
+mainMenu:
+    - icon: ['far', 'tachometer-alt']
+      title: Dashboard
+      to: '/dashboard'
+      exact: true
+    # - icon: ['far', 'tachometer-alt']
+    #   title: New Patient
+    #   to: '/patients/new'
+    #   exact: false
+
+    - icon: ['far', 'info-circle']
+      title: Resources
+      to: '/resources'
+    # - icon: ['far', 'folder']
+    #   title: Practice Information
+    #   to: '/practice-information'
+    - icon: ['far', 'cog']
+      title: Settings
+      to: '/settings'
+      exact: true
+    - icon: ['far', 'sign-out']
+      title: Log Out
+      to: '/account/logout'

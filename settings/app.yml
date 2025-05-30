@@ -1,0 +1,17 @@
+name: 'AGAMREE'
+program: 'AGAMREE Copay Co-pay Program'
+type: 'Coupon Portal'
+headerLogo: '/Banner.png'
+footerLogo: '/logo.png'
+author: 'TrialCard'
+cost: '$5'
+benefit: '$1000'
+card: '/Cizplam_CardFront.png'
+phone: '1-888-234-5678'
+phone_helpDesk: '1-888-987-6543'
+# CARE_PROGRAM_ID: '33'
+# REBATE_PROGRAM_ID: '201'
+triangleUp: '/triangleUp.svg'
+triangleDown: '/triangleDown.svg'
+description: >-
+  Cizplam

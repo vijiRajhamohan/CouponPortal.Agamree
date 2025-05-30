@@ -1,0 +1,37 @@
+errorPages:
+  default:
+    icon: ['far', 'exclamation']
+    title: >-
+      Unknown Error
+    message: >-
+      There appears to have been a problem, please try again later.
+  400:
+    icon: ['far', 'exclamation']
+    title: >-
+      Bad Request
+    message: >-
+      There appears to have been a problem, please try again later.
+  401:
+    icon: ['far', 'user-lock']
+    title: >-
+      Unauthorized
+    message: >-
+      It appears you are not authenticated, please login and try again.
+  403:
+    icon: ['far', 'user-slash']
+    title: >-
+      Forbidden
+    message: >-
+      You don't appear to have the correct permissions to access this page.  Please contact your system administartor.
+  404:
+    icon: ['far', 'cloud']
+    title: >-
+      Not Found
+    message: >-
+      It appears the page you requested could not be found.
+  500:
+    icon: ['far', 'exclamation']
+    title: >-
+      Internal Server Error
+    message: >-
+      Uh-oh there appears to have been an issue with the server, please try again later.

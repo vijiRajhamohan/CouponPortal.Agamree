@@ -1,0 +1,95 @@
+import {
+    faHome,
+    faPlusCircle,
+    faFolder,
+    faUserCircle,
+    faUserLock,
+    faUserSlash,
+    faScarecrow,
+    faCloud,
+    faTachometerAlt,
+    faSignOut,
+    faCog,
+    faCheck,
+    faTimes,
+    faInfoCircle,
+    faExclamation,
+    faExclamationTriangle,
+    faChevronLeft,
+    faChevronRight,
+    faSortUp,
+    faChevronDown,
+    faBars,
+    faCaretDown,
+    faSearch,
+    faPen,
+    faCalendarAlt,
+    faStar,
+    faStarHalf,
+    faCheckSquare,
+    faSquare,
+    faMinusSquare,
+    faTimesCircle,
+    faDotCircle,
+    faCircle,
+    faCheckCircle,
+} from '@fortawesome/pro-regular-svg-icons';
+
+import plugin from '@stargate/fontawesome';
+
+import { faStarOfLife } from '@fortawesome/pro-solid-svg-icons';
+import { VueConstructor } from 'vue';
+
+export default function icons(v: VueConstructor) {
+    return plugin(v, {
+        icons: {
+            faHome,
+            faPlusCircle,
+            faSearch,
+            faInfoCircle,
+            faChevronLeft,
+            faChevronRight,
+            faFolder,
+            faUserCircle,
+            faUserLock,
+            faUserSlash,
+            faScarecrow,
+            faExclamation,
+            faCloud,
+            faTachometerAlt,
+            faSignOut,
+            faCog,
+        },
+        vuetifyIcons: {
+            complete: faCheck,
+            cancel: faTimesCircle,
+            close: faTimes,
+            delete: faTimesCircle, // delete (e.g. v-chip close)
+            clear: faTimesCircle, // delete (e.g. v-chip close)
+            success: faCheckCircle,
+            info: faInfoCircle,
+            warning: faExclamation,
+            error: faExclamationTriangle,
+            prev: faChevronLeft,
+            next: faChevronRight,
+            checkboxOn: faCheckSquare,
+            checkboxOff: faSquare, // note 'far'
+            checkboxIndeterminate: faMinusSquare,
+            delimiter: faCircle, // for carousel
+            sort: faSortUp,
+            expand: faChevronDown,
+            menu: faBars,
+            subgroup: faCaretDown,
+            dropdown: faCaretDown,
+            radioOn: faDotCircle,
+            radioOff: faCircle,
+            edit: faPen,
+            ratingEmpty: faStar,
+            ratingFull: faStar,
+            ratingHalf: faStarHalf,
+            event: faCalendarAlt,
+            search: faSearch,
+            required: faStarOfLife,
+        },
+    });
+}

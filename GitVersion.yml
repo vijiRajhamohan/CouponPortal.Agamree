@@ -1,0 +1,19 @@
+assembly-versioning-scheme: MajorMinorPatch
+mode: Mainline
+next-version: 1.0.0
+continuous-delivery-fallback-tag: beta
+branches:
+  master:
+    regex: ^master$
+  develop:
+    regex: ^dev(elop)?(ment)?$
+  release:
+    regex: ^releases?[/-]
+  feature:
+    regex: ^features?[/-]
+  hotfix:
+    regex: ^hotfix(es)?[/-]
+  support:
+    regex: support[/-]
+ignore:
+  sha: []
