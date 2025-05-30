@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+@font-face {
+    font-family: 'Brandon_Text';
+    src: url('../fonts/Brandon_Text_Regular-BF6514e9eb617a0.otf') format('opentype');
+}
+@font-face {
+    font-family: 'Brandon_Bold';
+    src: url('../fonts/Brandon_Text_Bold-BF6514e9eb720dc.otf') format('opentype');
+}
+
+$body-font-family: 'Brandon_Text';
+
+@mixin btn-transition {
+    transition-duration: 0.28s;
+    transition-property: box-shadow, transform, opacity, background-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700'); */
+
+:root {
+    --color-primary: #122f54;
+    --color-primaryLight: #4ca3d8;
+    --color-secondary: #003c60;
+    --color-secondaryBright: #23759e;
+    --color-accent: #c41230;
+    --color-neutralLight: #d9d9d9;
+    --color-neutralBright: #fdfdfd;
+    --color-success: #009245;
+    --color-brandGrey: #333333;
+    --color-active: #59a2c1;
+
+    --color-mainBackground: #fff;
+    --color-headerBackground: #fff;
+}
+
+html,
+body,
+.v-application {
+    font-family: $body-font-family;
+}
+
+.theme--light:not(.v-btn) {
+    color: black !important;
+}
+
+.instructions {
+    font-size: 1.25rem;
+    text-align: center;
+    margin: 0 0 20px 0;
+}
+
+h1.brand-header {
+    font-size: 2em;
+    text-align: center;
+    font-family: 'Brandon_Bold';
+}
+
+.brand-header {
+    color: var(--color-primary);
+    font-weight: bold;
+    margin: 0 0 20px 0;
+    line-height: 1.25;
+    position: relative;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.big-btn{
+    font-family: 'Brandon_Bold' !important;
+}
+
+.btn-sub-header{
+    color: var(--color-primary);
+}
+
+.v-application a {
+    text-decoration: none;
+}
+
+.page-enter-active,
+.page-leave-active {
+    transition: opacity 0.2s ease-in;
+}
+
+.page-enter-active {
+    transition-delay: 0.3s;
+}
+
+.page-enter,
+.page-leave-to {
+    opacity: 0;
+}
+
+.v-btn--floating,
+.v-btn--small,
+.v-btn--large {
+    .v-btn__content {
+        height: inherit;
+        width: inherit;
+    }
+}
+
+.v-icon.svg-inline--fa,
+.v-icon.fa,
+.fa-layers,
+.fa-stack {
+    display: inline-flex;
+}
+
+.v-icon.fa-inverse {
+    color: $white !important;
+}
+
+.svg-inline--fa.v-icon--is-component {
+    .v-input {
+        height: 16px;
+        font-size: 16px;
+        width: 16px;
+    }
+    .v-input--selection-controls__input & {
+        height: 24px;
+        font-size: 24px;
+        width: 24px;
+    }
+}
+
+.big-btn {
+    // height: 200;
+    width: 100%;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.main-container {
+    height: 100%;
+    background: var(--color-mainBackground);
+}
+
+.error-text {
+    color: red;
+    font-weight: bold;
+}
+
+.v-input .v-label {
+    height: auto;
+    min-height: 20px;
+    color: black;
+}
+
+.v-btn {
+    @include btn-transition;
+    font-family: $body-font-family !important;
+    &.primary:hover:before,
+    &.primary:focus:before {
+        background-color: var(--color-active) !important;
+    }
+    &.secondary:hover:before,
+    &.secondary:focus:before {
+        background-color: var(--color-secondaryBright) !important;
+    }
+    &:before {
+        @include btn-transition;
+        color: transparent !important;
+        opacity: 1 !important;
+    }
+}
+
+.radio-column {
+    position: relative;
+    .required-icon {
+        position: absolute !important;
+        left: 13px;
+        top: 13px;
+    }
+    .question-label {
+        margin-left: 35px;
+        line-height: 1.3em;
+    }
+    .v-input--selection-controls {
+        margin-left: 35px;
+    }
+}
+
+.fs-14 {
+    font-size: 14px !important;
+}
+.fs-16 {
+    font-size: 16px !important;
+}
+.fs-18 {
+    font-size: 18px !important;
+}
+.fs-20 {
+    font-size: 20px !important;
+}
+.fs-22 {
+    font-size: 22px !important;
+}
+.fs-24 {
+    font-size: 24px !important;
+}
+.fs-26 {
+    font-size: 26px !important;
+}
+.fs-36 {
+    font-size: 36px !important;
+}

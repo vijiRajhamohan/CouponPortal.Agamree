@@ -1,0 +1,20 @@
+$primary: #122f54;
+$primaryLight: #4ca3d8;
+$secondary: #003c60;
+$secondaryBright: #23759e;
+$accent: #c41230;
+$neutralLight: #f1f1f1;
+$neutralBright: #f5f5f5;
+$success: #009245;
+$brandGrey: #E6E6E6;
+$active: #59a2c1;
+$white: #ffffff;
+
+
+
+
+:export {
+    primaryColor: $primary;
+    secondaryColor: $secondary;
+    accentColor: $accent;
+}
