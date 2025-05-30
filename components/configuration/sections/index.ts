@@ -1,0 +1,10 @@
+export { default as ButtonSection } from './ButtonSection.vue';
+export { default as ColorSection } from './ColorSection.vue';
+export { default as FeatureSection } from './FeatureSection.vue';
+export { default as FooterSection } from './FooterSection.vue';
+export { default as HeaderSection } from './HeaderSection.vue';
+export { default as LayoutSection } from './LayoutSection.vue';
+export { default as LogoSection } from './LogoSection.vue';
+export { default as BackgroundSection } from './BackgroundSection.vue';
+export { default as TextSection } from './TextSection.vue';
+export { default as PagesSection } from './PagesSection.vue';
